@@ -1,17 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Resposta from './components/Resposta';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const App = () => {
+  const [texto, setTexto] = useState('');
+  const [mostrarResposta, setMostrarResposta] = useState(false);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  const handleChange = (event) => {
+    setTexto(event.target.value);
+  }
+
+  const handleClick = () => {
+    setMostrarResposta(true);
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleClick();
+    }
+  };
+
+  return (
+    <div>
+      <h1>ChefIA</h1>
+      <div class="entrada">
+        <input type="text" value={texto} onChange={handleChange} onKeyPress={handleKeyPress} />
+        <button onClick={handleClick}>Resultado</button>
+      </div>
+      <div class="saida">
+        {mostrarResposta && <Resposta texto={texto} />}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+)
