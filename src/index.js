@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Resposta from './components/Resposta';
+import InputReceita from './components/InputReceita';
 
 const App = () => {
   const [texto, setTexto] = useState('');
@@ -24,11 +25,11 @@ const App = () => {
   return (
     <div>
       <h1>ChefIA</h1>
-      <div class="entrada">
-        <input type="text" value={texto} onChange={handleChange} onKeyPress={handleKeyPress} />
+      <div className="entrada">
+        <InputReceita value={texto} onChange={handleChange} onKeyPress={handleKeyPress} />
         <button onClick={handleClick}>Resultado</button>
       </div>
-      <div class="saida">
+      <div className="saida">
         {mostrarResposta && <Resposta texto={texto} />}
       </div>
     </div>
