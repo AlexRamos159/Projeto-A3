@@ -4,17 +4,24 @@ import './index.css';
 import Resposta from './components/Resposta';
 import InputReceita from './components/InputReceita';
 import Botao from './components/Botao';
+import { chamarAPI } from './APIs';
 
 const App = () => {
   const [texto, setTexto] = useState('');
-  const [mostrarResposta, setMostrarResposta] = useState(false);
 
   const handleChange = (event) => {
     setTexto(event.target.value);
   }
 
   const handleClick = () => {
-    setMostrarResposta(true);
+    fetch('localhost:4000')
+    chamarAPI(texto)
+    .then (data => {
+      setTexto(data)
+    })
+    .catch (error => {
+      console.log('Erro ao chamar a API: ', error);
+    })
   }
 
   const handleKeyPress = (event) => {
@@ -28,10 +35,10 @@ const App = () => {
       <h1>ChefIA</h1>
       <div className="entrada">
         <InputReceita value={texto} onChange={handleChange} onKeyPress={handleKeyPress} />
-        <Botao onClick={handleClick} />
+        <Botao handleClick={handleClick} />
       </div>
       <div className="saida">
-        {mostrarResposta && <Resposta texto={texto} />}
+        <Resposta />
       </div>
     </div>
   );

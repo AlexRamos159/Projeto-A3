@@ -1,10 +1,8 @@
 import React from 'react';
 
-const Botao = (props) => {
+const Botao = ({ handleClick }) => {
     return (
-        <div>
-            <button onClick={props.onClick}>Resultado</button>
-        </div>
+        <button onClick={handleClick}>Resultado</button>
     )
 }
 

@@ -1,5 +1,5 @@
 const { OpenAI } = require('openai');
-const path = require('path');
+const path = require('path-browserify');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
