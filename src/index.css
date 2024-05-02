@@ -35,8 +35,8 @@ h1 {
 }
 
 /* Estiliza o input de texto */
-input[type="text"] {
-  flex: 1; /* Faz o input ocupar todo o espaço disponível */
+input {
+  width: calc(250% - 100px); /* Define a largura do input */
   margin-right: 10px; /* Adiciona margem à direita do input */
   padding: 10px; /* Adiciona preenchimento interno ao input */
   border: 1px solid #ccc; /* Adiciona uma borda ao input */
@@ -53,6 +53,7 @@ button {
   border-radius: 4px; /* Adiciona bordas arredondadas ao botão */
   font-size: 16px; /* Define o tamanho da fonte */
   cursor: pointer; /* Muda o cursor para uma mão ao passar sobre o botão */
+  margin-left: auto; /* Alinha o botão à direita */
 }
 
 /* Estiliza o botão quando passa o mouse por cima */
