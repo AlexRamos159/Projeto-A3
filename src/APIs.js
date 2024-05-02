@@ -7,6 +7,9 @@ const openai = new OpenAI(apiKey);
 
 const chamarAPI = async (prompt) => {
     try {
+        const prePrompt = "Por favor, caso seja uma receita válida, prepare a seguinte receita no formato 'título, ingredientes e modo de preparo': "
+        prompt = prePrompt + prompt;
+
         const model = 'gpt-3.5-turbo';
         const role = 'user';
         const completion = await openai.chat.completions.create({
@@ -14,7 +17,6 @@ const chamarAPI = async (prompt) => {
             model: model
         });
         const resposta = completion.choices[0].message.content;
-        console.log('Resposta da API:', resposta);
         return resposta;
     } catch (error) {
         console.error('Erro ao chamar a API:', error);
