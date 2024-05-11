@@ -8,7 +8,7 @@ const openai = new OpenAI(apiKey);
 const chamarAPI = async (prompt) => {
     try {
         const prePrompt = `
-        Por favor, siga as instruções abaixo para fornecer uma receita:
+        Por favor, siga as instruções abaixo para fornecer orientações básicas e genéricas de uma receita:
 
         1. Título: [Digite o título da receita]
         2. Ingredientes:
