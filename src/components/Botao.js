@@ -1,5 +1,5 @@
-// Botao.js
 import React from 'react';
+import styles from './Botao.module.css'
 
 const Botao = ({ onClick, setResposta, texto }) => {
     const handleClick = () => {
@@ -19,14 +19,8 @@ const Botao = ({ onClick, setResposta, texto }) => {
         });
     };
 
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            handleClick();
-        }
-    };
-
     return (
-        <button onClick={handleClick} onKeyPress={handleKeyPress}>Resultado</button>
+        <button className={styles.botao} onClick={handleClick}>Resultado</button>
     );
 }
 

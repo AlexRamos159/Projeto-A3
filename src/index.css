@@ -1,7 +1,7 @@
 /* Define a fonte padrão para o corpo do documento */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5; /* Define a cor de fundo para o corpo do documento */
+  background-color: #020202; /* Define a cor de fundo para o corpo do documento */
   margin: 0; /* Remove margens do corpo do documento */
   padding: 0; /* Remove preenchimento do corpo do documento */
 }
@@ -28,42 +28,18 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra ao contêiner */
 }
 
-/* Estiliza o título principal */
-h1 {
-  text-align: center; /* Centraliza o texto horizontalmente */
-  margin-bottom: 20px; /* Adiciona margem inferior ao título */
-}
-
-/* Estiliza o input de texto */
-input {
-  width: calc(250% - 100px); /* Define a largura do input */
-  margin-right: 10px; /* Adiciona margem à direita do input */
-  padding: 10px; /* Adiciona preenchimento interno ao input */
-  border: 1px solid #ccc; /* Adiciona uma borda ao input */
-  border-radius: 4px; /* Adiciona bordas arredondadas ao input */
-  font-size: 16px; /* Define o tamanho da fonte */
-}
-
-/* Estiliza o botão */
-button {
-  padding: 10px; /* Adiciona preenchimento interno ao botão */
-  background-color: #007bff; /* Define a cor de fundo do botão */
-  color: #fff; /* Define a cor do texto do botão */
-  border: none; /* Remove a borda do botão */
-  border-radius: 4px; /* Adiciona bordas arredondadas ao botão */
-  font-size: 16px; /* Define o tamanho da fonte */
-  cursor: pointer; /* Muda o cursor para uma mão ao passar sobre o botão */
-  margin-left: auto; /* Alinha o botão à direita */
-}
-
-/* Estiliza o botão quando passa o mouse por cima */
-button:hover {
-  background-color: #0056b3; /* Altera a cor de fundo do botão ao passar o mouse sobre ele */
-}
-
 /* Estiliza o parágrafo dentro do contêiner de saída */
 .saida p {
   padding: 10px; /* Adiciona preenchimento interno ao parágrafo */
   background-color: #f0f0f0; /* Define a cor de fundo do parágrafo */
   border-radius: 4px; /* Adiciona bordas arredondadas ao parágrafo */
 }
+
+/* Estilo para a imagem do ícone */
+.icon-img {
+  display: block;
+  margin: 0 auto 10px;
+  width: 256px; /* Define a largura desejada */
+  height: auto; /* Define a altura desejada */
+}
+

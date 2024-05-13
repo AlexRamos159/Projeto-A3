@@ -1,0 +1,8 @@
+.inputReceita {
+    width: calc(250% - 100px); /* Define a largura do input */
+    margin-right: 10px; /* Adiciona margem à direita do input */
+    padding: 10px; /* Adiciona preenchimento interno ao input */
+    border: 1px solid #ccc; /* Adiciona uma borda ao input */
+    border-radius: 4px; /* Adiciona bordas arredondadas ao input */
+    font-size: 16px; /* Define o tamanho da fonte */
+  }

@@ -1,15 +1,13 @@
 import React from 'react';
+import styles from './Resposta.module.css'
 
 const Resposta = ({ resposta }) => {
-  // Verifica se a resposta não está vazia
   if (!resposta) {
-    return <><p></p></>;
+    return <p></p>;
   }
 
-  // Divide a resposta em linhas
   const linhas = resposta.split('\n');
 
-  // Extrai o título, os ingredientes e o modo de preparo
   let titulo = '';
   let ingredientes = [];
   let modoPreparo = [];
@@ -18,9 +16,9 @@ const Resposta = ({ resposta }) => {
   linhas.forEach((linha) => {
     if (linha.startsWith('Título:')) {
       titulo = linha.replace('Título:', '').trim();
-    } else if (linha.startsWith('Ingredientes:')) {
+    } else if (linha.startsWith('Ingredientes:') || linha.startsWith('Ingredientes')) {
       isModoPreparo = false;
-    } else if (linha.startsWith('Modo de Preparo:')) {
+    } else if (linha.startsWith('Modo de Preparo:') || linha.startsWith('Modo de Preparo')) {
       isModoPreparo = true;
     } else {
       if (!isModoPreparo && linha.trim() !== '') {
@@ -32,21 +30,18 @@ const Resposta = ({ resposta }) => {
   });
 
   return (
-    <div>
-      {/* Exibe o título */}
-      <h2>{titulo}</h2>
+    <div className={styles.resposta}>
+      <h2 className={styles.titulo}>{titulo}</h2>
 
-      {/* Exibe os ingredientes */}
       <h3>Ingredientes:</h3>
-      <ul>
+      <ul className={styles.ingredientes}>
         {ingredientes.map((ingrediente, index) => (
           <li key={index}>{ingrediente}</li>
         ))}
       </ul>
 
-      {/* Exibe o modo de preparo */}
       <h3>Modo de Preparo:</h3>
-      <ol>
+      <ol className={styles.modoPreparo}>
         {modoPreparo.map((passo, index) => (
           <li key={index}>{passo}</li>
         ))}

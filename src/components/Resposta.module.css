@@ -1,0 +1,32 @@
+.resposta {
+    max-width: 600px; /* Define a largura máxima do contêiner */
+    margin: 20px auto; /* Centraliza o contêiner horizontalmente na página e adiciona margem superior e inferior */
+    padding: 20px; /* Adiciona preenchimento interno ao contêiner */
+    background-color: #fff; /* Define a cor de fundo do contêiner */
+    border-radius: 8px; /* Adiciona bordas arredondadas ao contêiner */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra ao contêiner */
+  }
+  
+  .titulo {
+    text-align: center; /* Centraliza o texto horizontalmente */
+    margin-bottom: 20px; /* Adiciona margem inferior ao título */
+  }
+  
+  .ingredientes {
+    padding: 0 0 0 20px; /* Remove o preenchimento padrão da lista */
+  }
+  
+  .ingredientes li {
+    margin-bottom: 10px; /* Adiciona margem inferior aos itens da lista */
+    list-style-type: none !important; /* Remove os marcadores de lista */
+  }
+  
+  .modoPreparo ol {
+    list-style-type: decimal; /* Define os marcadores de lista como numéricos */
+    padding: 0 0 0 20px; /* Adiciona preenchimento à esquerda para a lista numerada */
+  }
+  
+  .modoPreparo ol li {
+    margin-bottom: 10px; /* Adiciona margem inferior aos itens da lista */
+  }
+  

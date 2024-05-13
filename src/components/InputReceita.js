@@ -1,9 +1,10 @@
 import React from 'react';
+import styles from './InputReceita.module.css'
 
 const InputReceita = (props) => {
     return (
         <div>
-            <input type="text" value={props.value} onChange={props.onChange} />
+            <input className={styles.inputReceita} type="text" value={props.value} onChange={props.onChange} />
         </div>
     );
 }

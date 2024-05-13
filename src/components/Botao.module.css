@@ -1,0 +1,15 @@
+.botao {
+    padding: 10px; /* Adiciona preenchimento interno ao botão */
+    background-color: #f6ff00; /* Define a cor de fundo do botão */
+    color: #000000; /* Define a cor do texto do botão */
+    border: none; /* Remove a borda do botão */
+    border-radius: 4px; /* Adiciona bordas arredondadas ao botão */
+    font-size: 16px; /* Define o tamanho da fonte */
+    cursor: pointer; /* Muda o cursor para uma mão ao passar sobre o botão */
+    margin-left: auto; /* Alinha o botão à direita */
+  }
+  
+  .botao:hover {
+    background-color: #0056b3; /* Altera a cor de fundo do botão ao passar o mouse sobre ele */
+  }
+  
