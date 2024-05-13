@@ -1,7 +1,7 @@
-// App.js
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
+import logo from './assets/Logo-ChefIA.ico'
 import Resposta from './components/Resposta';
 import InputReceita from './components/InputReceita';
 import Botao from './components/Botao';
@@ -16,7 +16,7 @@ const App = () => {
 
     return (
         <div>
-            <h1>ChefIA</h1>
+            <img className='icon-img' src={logo} alt='Ícone ChefIA'></img>
             <div className="entrada">
                 <InputReceita value={texto} onChange={handleChange} />
                 <Botao setResposta={setResposta} texto={texto} />
@@ -28,7 +28,4 @@ const App = () => {
     );
 }
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-);
+createRoot(document.getElementById('root')).render(<App />);
