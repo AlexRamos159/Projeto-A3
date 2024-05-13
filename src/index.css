@@ -34,12 +34,3 @@ body {
   background-color: #f0f0f0; /* Define a cor de fundo do parágrafo */
   border-radius: 4px; /* Adiciona bordas arredondadas ao parágrafo */
 }
-
-/* Estilo para a imagem do ícone */
-.icon-img {
-  display: block;
-  margin: 0 auto 10px;
-  width: 256px; /* Define a largura desejada */
-  height: auto; /* Define a altura desejada */
-}
-

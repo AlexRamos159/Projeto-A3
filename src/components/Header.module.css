@@ -1,0 +1,18 @@
+/* Estilo para a imagem do ícone */
+.icon {
+    display: block;
+    margin: 0 auto 10px;
+    width: 256px;
+    height: auto;
+}
+
+.header {
+    color: white;
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.header li {
+    margin-right: 20px;
+}

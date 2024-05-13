@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import logo from './assets/Logo-ChefIA.ico'
+import Header from './components/Header'
 import Resposta from './components/Resposta';
 import InputReceita from './components/InputReceita';
 import Botao from './components/Botao';
@@ -16,7 +16,7 @@ const App = () => {
 
     return (
         <div>
-            <img className='icon-img' src={logo} alt='Ícone ChefIA'></img>
+            <Header />
             <div className="entrada">
                 <InputReceita value={texto} onChange={handleChange} />
                 <Botao setResposta={setResposta} texto={texto} />
