@@ -5,30 +5,28 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState(null);
-    const [showLoginModal, setShowLoginModal] = useState(false);
-    const [showLogoutModal, setShowLogoutModal] = useState(false)
-    
-    const toggleLoginModal = () => {
-        setShowLoginModal(!showLoginModal);
+    const [activeModal, setActiveModal] = useState(null);
+
+    const openModal = (modalName) => {
+        setActiveModal(modalName);
     }
 
-    const toggleLogoutModal = () => {
-        setShowLogoutModal(!showLogoutModal)
+    const closeModal = () => {
+        setActiveModal(null);
     }
-
 
     const handleLogin = (username) => {
         setUsername(username)
         setIsLoggedIn(true);
-        toggleLoginModal();
+        closeModal();
     };
     const handleLogout = () => {
         setUsername(null);
         setIsLoggedIn(false);
-        toggleLogoutModal();
+        closeModal();
     };
     return (
-        <AuthContext.Provider value={{ isLoggedIn, username, toggleLoginModal, toggleLogoutModal, handleLogin, handleLogout, showLoginModal, showLogoutModal }}>
+        <AuthContext.Provider value={{ isLoggedIn, username, activeModal, openModal, handleLogin, handleLogout }}>
             {children}
         </AuthContext.Provider>
     )

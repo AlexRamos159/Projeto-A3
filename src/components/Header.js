@@ -2,41 +2,28 @@ import React from 'react';
 import logo from './assets/Logo-ChefIA.ico'
 import styles from './Header.module.css'
 import { useAuth } from '../AuthContext';
+import Modal from './Modal'
 import Login from './Login'
 import Logout from './Logout'
 
 const Header = () => {
-    const { isLoggedIn, username, toggleLoginModal, toggleLogoutModal, handleLogin, handleLogout, showLoginModal, showLogoutModal } = useAuth();
+    const { isLoggedIn, username, activeModal, openModal, handleLogin, handleLogout } = useAuth();
 
     return (
         <header className={styles.header}>
             <img className={styles.icon} src={logo} alt="Ícone ChefIA" />
             <ul className={styles.headerItems}>
                 <li>Favoritos</li>
-                <li onClick={isLoggedIn ? toggleLogoutModal : toggleLoginModal}>
+                <li onClick={() => openModal(isLoggedIn ? 'logout' : 'login')}>
                     {isLoggedIn ? 'Logout' : 'Login'}
                 </li>
             </ul>
-            {showLoginModal && (
-                <div className={styles.modal}>
-                    <div className={styles.modalContent}>
-                        <span className={styles.close} onClick={toggleLoginModal}>
-                            &times;
-                        </span>
-                        <Login handleLogin={handleLogin} />
-                    </div>
-                </div>
-            )}
-            {showLogoutModal && (
-                <div className={styles.modal}>
-                    <div className={styles.modalContent}>
-                        <span className={styles.close} onClick={toggleLogoutModal}>
-                            &times;
-                        </span>
-                        <Logout handleLogout={handleLogout} />
-                    </div>
-                </div>
-            )}
+            <Modal isOpen={activeModal === 'login'} onClose={() => openModal(null)}>
+                <Login handleLogin={handleLogin} />
+            </Modal>
+            <Modal isOpen={activeModal === 'logout'} onClose={() => openModal(null)}>
+                <Logout handleLogout={handleLogout} />
+            </Modal>
         </header >
     )
 }
