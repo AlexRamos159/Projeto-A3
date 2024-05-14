@@ -5,35 +5,20 @@ import Header from './components/Header'
 import Resposta from './components/Resposta';
 import InputReceita from './components/InputReceita';
 import Botao from './components/Botao';
+import { AuthProvider } from './AuthContext';
 
 const App = () => {
     const [texto, setTexto] = useState('');
     const [resposta, setResposta] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [showLoginModal, setShowLoginModal] = useState(false);
-    const [showLogoutModal, setShowLogoutModal] = useState(false)
-
-    const toggleLogoutModal = () => {
-        setShowLogoutModal(!showLogoutModal)
-    }
-
-    const toggleLoginModal = () => {
-        setShowLoginModal(!showLoginModal);
-    }
 
     const handleChange = (event) => {
         setTexto(event.target.value);
     }
 
     return (
+        <AuthProvider>
         <div>
-            <Header
-            isLoggedIn={isLoggedIn}
-            toggleLoginModal={toggleLoginModal}
-            showLoginModal={showLoginModal}
-            toggleLogoutModal={toggleLogoutModal}
-            showLogoutModal={showLogoutModal}
-            setIsLoggedIn={setIsLoggedIn} />
+            <Header />
             <div className="entrada">
                 <InputReceita value={texto} onChange={handleChange} />
                 <Botao setResposta={setResposta} texto={texto} />
@@ -42,6 +27,7 @@ const App = () => {
                 <Resposta resposta={resposta} />
             </div>
         </div>
+        </AuthProvider>
     );
 }
 

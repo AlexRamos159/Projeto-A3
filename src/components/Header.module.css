@@ -1,22 +1,25 @@
-/* Estilo para a imagem do ícone */
 .icon {
-    display: block;
-    margin: 0 auto 10px;
-    width: 256px;
-    height: auto;
+    width: 128px;
 }
 
 .header {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.headerItems {
     color: white;
     list-style: none;
     padding: 0;
+    margin-left: auto;
+    margin-right: 10px;
     display: flex;
-    justify-content: right;
 }
 
-.header li {
-    margin-right: 20px;
+.headerItems li {
     cursor: pointer;
+    margin-left: 20px;
 }
 
 .modal {
