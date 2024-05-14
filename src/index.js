@@ -11,6 +11,11 @@ const App = () => {
     const [resposta, setResposta] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false)
+
+    const toggleLogoutModal = () => {
+        setShowLogoutModal(!showLogoutModal)
+    }
 
     const toggleLoginModal = () => {
         setShowLoginModal(!showLoginModal);
@@ -22,7 +27,13 @@ const App = () => {
 
     return (
         <div>
-            <Header isLoggedIn={isLoggedIn} toggleLoginModal={toggleLoginModal} showLoginModal={showLoginModal} setIsLoggedIn={setIsLoggedIn} />
+            <Header
+            isLoggedIn={isLoggedIn}
+            toggleLoginModal={toggleLoginModal}
+            showLoginModal={showLoginModal}
+            toggleLogoutModal={toggleLogoutModal}
+            showLogoutModal={showLogoutModal}
+            setIsLoggedIn={setIsLoggedIn} />
             <div className="entrada">
                 <InputReceita value={texto} onChange={handleChange} />
                 <Botao setResposta={setResposta} texto={texto} />
