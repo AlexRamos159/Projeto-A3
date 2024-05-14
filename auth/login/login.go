@@ -30,6 +30,8 @@ func main() {
 		if r.Method != http.MethodPost {
 			w.WriteHeader(http.StatusMethodNotAllowed)
 			fmt.Fprintf(w, "Método não permitido")
+			// Log para método de requisição
+			log.Printf("Método de requisição não permitido: %s", r.Method)
 			return
 		}
 		// Extrai os valores do formulário HTTP para username e password
@@ -38,6 +40,7 @@ func main() {
 		// Verifica se o usuário e a senha fornecidos são válidos
 		if !isValidUser(users, username, password) {
 			// Retorna status de não autorizado se não forem válidos
+			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "Usuário ou senha inválidos")
 			return
 		}
