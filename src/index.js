@@ -9,6 +9,12 @@ import Botao from './components/Botao';
 const App = () => {
     const [texto, setTexto] = useState('');
     const [resposta, setResposta] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+
+    const toggleLoginModal = () => {
+        setShowLoginModal(!showLoginModal);
+    }
 
     const handleChange = (event) => {
         setTexto(event.target.value);
@@ -16,7 +22,7 @@ const App = () => {
 
     return (
         <div>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} toggleLoginModal={toggleLoginModal} showLoginModal={showLoginModal} setIsLoggedIn={setIsLoggedIn} />
             <div className="entrada">
                 <InputReceita value={texto} onChange={handleChange} />
                 <Botao setResposta={setResposta} texto={texto} />

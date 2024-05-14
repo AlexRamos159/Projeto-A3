@@ -3,8 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
+
+	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 // Definição da estrutura de dados para um usuário
@@ -17,14 +21,11 @@ func main() {
 	// Carrega os usuários do arquivo
 	users, err := loadUsers()
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalf("Erro ao carregar usuários: %v", err)
 	}
-
-	// Manipuladores para diferentes rotas HTTP
-
+	r := mux.NewRouter()
 	// Manipulador para a rota de login
-	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		// Verifica se o método da requisição é POST
 		if r.Method != http.MethodPost {
 			w.WriteHeader(http.StatusMethodNotAllowed)
@@ -34,29 +35,35 @@ func main() {
 		// Extrai os valores do formulário HTTP para username e password
 		username := r.FormValue("username")
 		password := r.FormValue("password")
-
 		// Verifica se o usuário e a senha fornecidos são válidos
 		if !isValidUser(users, username, password) {
 			// Retorna status de não autorizado se não forem válidos
-			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "Usuário ou senha inválidos")
 			return
 		}
 
 		// Se forem válidos, retorna mensagem de autenticação bem-sucedida
 		fmt.Fprintf(w, "Autenticado com sucesso!")
-		// Redireciona para a página principal
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}).Methods("POST")
+
+	// Configuração CORS
+	corsOptions := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost:3000"},
+		AllowedMethods: []string{"POST", "OPTIONS"},
 	})
 
-	// Inicia o servidor HTTP na porta 8080
-	http.ListenAndServe(":8080", nil)
+	// Adiciona o middleware CORS ao roteador
+	handler := corsOptions.Handler(r)
+
+	// Inicia o servidor HTTP na porta 4000
+	fmt.Println("Servidor iniciado na porta 4001")
+	http.ListenAndServe(":4001", handler)
 }
 
 // Função para carregar os usuários do arquivo JSON
 func loadUsers() ([]User, error) {
 	// Lê os dados do arquivo de usuários
-	data, err := ioutil.ReadFile("../users.json")
+	data, err := os.ReadFile("../users.json")
 	if err != nil {
 		return nil, err
 	}
