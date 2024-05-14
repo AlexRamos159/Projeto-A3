@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './Login.module.css'
 
 const Login = (props) => {
     const [username, setUsername] = useState('');
@@ -30,11 +31,12 @@ const Login = (props) => {
 
     return (
         <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+            <h2 className={styles.title}>Login</h2>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="username">Nome de Usuário:</label>
+                    <label className={styles.label} htmlFor="username">Nome de Usuário:</label>
                     <input 
+                        className={styles.input}
                         type="text" 
                         id="username" 
                         value={username} 
@@ -43,8 +45,9 @@ const Login = (props) => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Senha:</label>
-                    <input 
+                    <label className={styles.label} htmlFor="password">Senha:</label>
+                    <input
+                        className={styles.input} 
                         type="password" 
                         id="password" 
                         value={password} 
@@ -52,7 +55,7 @@ const Login = (props) => {
                         required 
                     />
                 </div>
-                <button type="submit">Entrar</button>
+                <button className={styles.botao} type="submit">Entrar</button>
             </form>
         </div>
     );
