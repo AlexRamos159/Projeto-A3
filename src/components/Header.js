@@ -1,3 +1,4 @@
+// Header.js
 import React from 'react';
 import logo from './assets/Logo-ChefIA.ico'
 import styles from './Header.module.css'
@@ -5,9 +6,21 @@ import { useAuth } from '../AuthContext';
 import Modal from './Modal'
 import Login from './Login'
 import Logout from './Logout'
+import Cadastro from './Cadastro';
 
 const Header = () => {
-    const { isLoggedIn, username, activeModal, openModal, handleLogin, handleLogout } = useAuth();
+    const { isLoggedIn, activeModal, openModal, closeModal, handleLogin, handleLogout, showCadastroModal, openCadastroModal, closeCadastroModal } = useAuth();
+
+    const renderModalContent = () => {
+        switch (activeModal) {
+            case 'login':
+                return <Login handleLogin={handleLogin} onClose={closeModal} openCadastroModal={openCadastroModal} />;
+            case 'logout':
+                return <Logout handleLogout={handleLogout} />;
+            default:
+                return null;
+        }
+    };
 
     return (
         <header className={styles.header}>
@@ -18,14 +31,14 @@ const Header = () => {
                     {isLoggedIn ? 'Logout' : 'Login'}
                 </li>
             </ul>
-            <Modal isOpen={activeModal === 'login'} onClose={() => openModal(null)}>
-                <Login handleLogin={handleLogin} />
+            <Modal isOpen={activeModal === 'login' || activeModal === 'logout'} onClose={closeModal}>
+                {renderModalContent()}
             </Modal>
-            <Modal isOpen={activeModal === 'logout'} onClose={() => openModal(null)}>
-                <Logout handleLogout={handleLogout} />
+            <Modal isOpen={showCadastroModal} onClose={closeCadastroModal}>
+                <Cadastro onClose={closeCadastroModal} />
             </Modal>
-        </header >
-    )
+        </header>
+    );
 }
 
-export default Header
+export default Header;

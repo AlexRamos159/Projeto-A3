@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sync"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -17,37 +18,19 @@ type User struct {
 	Password string `json:"password"` // Campo para a senha do usuário
 }
 
-func main() {
-	// Carrega os usuários do arquivo
-	users, err := loadUsers()
-	if err != nil {
-		log.Fatalf("Erro ao carregar usuários: %v", err)
-	}
-	r := mux.NewRouter()
-	// Manipulador para a rota de login
-	r.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		// Verifica se o método da requisição é POST
-		if r.Method != http.MethodPost {
-			w.WriteHeader(http.StatusMethodNotAllowed)
-			fmt.Fprintf(w, "Método não permitido")
-			// Log para método de requisição
-			log.Printf("Método de requisição não permitido: %s", r.Method)
-			return
-		}
-		// Extrai os valores do formulário HTTP para username e password
-		username := r.FormValue("username")
-		password := r.FormValue("password")
-		// Verifica se o usuário e a senha fornecidos são válidos
-		if !isValidUser(users, username, password) {
-			// Retorna status de não autorizado se não forem válidos
-			w.WriteHeader(http.StatusUnauthorized)
-			fmt.Fprintf(w, "Usuário ou senha inválidos")
-			return
-		}
+// Estrutura para carregar os usuários do arquivo JSON
+type UserStore struct {
+	sync.RWMutex
+	Users []User
+}
 
-		// Se forem válidos, retorna mensagem de autenticação bem-sucedida
-		fmt.Fprintf(w, "Autenticado com sucesso!")
-	}).Methods("POST")
+func main() {
+	// Inicia o servidor HTTP na porta 4001
+	fmt.Println("Servidor iniciado na porta 4001")
+	r := mux.NewRouter()
+	store := &UserStore{}
+
+	r.HandleFunc("/login", store.handleLogin).Methods("POST")
 
 	// Configuração CORS
 	corsOptions := cors.New(cors.Options{
@@ -58,37 +41,71 @@ func main() {
 	// Adiciona o middleware CORS ao roteador
 	handler := corsOptions.Handler(r)
 
-	// Inicia o servidor HTTP na porta 4000
-	fmt.Println("Servidor iniciado na porta 4001")
 	http.ListenAndServe(":4001", handler)
 }
 
 // Função para carregar os usuários do arquivo JSON
-func loadUsers() ([]User, error) {
+func (store *UserStore) LoadUsers(filename string) error {
+	store.Lock()
+	defer store.Unlock()
+
 	// Lê os dados do arquivo de usuários
-	data, err := os.ReadFile("../users.json")
+	data, err := os.ReadFile(filename)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// Decodifica os dados JSON em uma lista de usuários
-	var users []User
-	err = json.Unmarshal(data, &users)
+	err = json.Unmarshal(data, &store.Users)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return users, nil
+	return nil
 }
 
 // Função para verificar se um usuário é válido
-func isValidUser(users []User, username, password string) bool {
+func (store *UserStore) IsValidUser(username, password string) bool {
+	store.RLock()
+	defer store.RUnlock()
+
 	// Verifica se existe um usuário com o nome de usuário e senha fornecidos
-	for _, user := range users {
+	for _, user := range store.Users {
 		if user.Username == username && user.Password == password {
 			return true
 		}
 	}
-
 	return false
+}
+
+func (store *UserStore) handleLogin(w http.ResponseWriter, r *http.Request) {
+	// Recarrega os usuários do arquivo JSON a cada requisição
+	err := store.LoadUsers("../users.json")
+	if err != nil {
+		log.Printf("Erro ao carregar usuários: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	// Verifica se o método da requisição é POST
+	if r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		fmt.Fprintf(w, "Método não permitido")
+		return
+	}
+
+	// Extrai os valores do formulário HTTP para username e password
+	username := r.FormValue("username")
+	password := r.FormValue("password")
+
+	// Verifica se o usuário e a senha fornecidos são válidos
+	if !store.IsValidUser(username, password) {
+		// Retorna status de não autorizado se não forem válidos
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Fprintf(w, "Usuário ou senha inválidos")
+		return
+	}
+
+	// Se forem válidos, retorna mensagem de autenticação bem-sucedida
+	fmt.Fprintf(w, "Autenticado com sucesso!")
 }
