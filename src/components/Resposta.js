@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Resposta.module.css'
+import BotaoFavoritar from './BotaoFavoritar';
 
 const Resposta = ({ resposta }) => {
   if (!resposta) {
@@ -22,9 +23,11 @@ const Resposta = ({ resposta }) => {
       isModoPreparo = true;
     } else {
       if (!isModoPreparo && linha.trim() !== '') {
-        ingredientes.push(linha.trim());
+        const ingrediente = linha.trim().replace(/^\s*-\s*/, '');
+        ingredientes.push(ingrediente);
       } else if (isModoPreparo) {
-        modoPreparo.push(linha.trim().replace(/^\d+\. /, ''));
+        const passo = linha.trim().replace(/^\s*-\s*/, '');
+        modoPreparo.push(passo);
       }
     }
   });
@@ -46,6 +49,7 @@ const Resposta = ({ resposta }) => {
           <li key={index}>{passo}</li>
         ))}
       </ol>
+      <BotaoFavoritar titulo={titulo} ingredientes={ingredientes} modoPreparo={modoPreparo} />
     </div>
   );
 };

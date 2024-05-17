@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
-import { useAuth } from '../AuthContext';
-import Modal from './Modal'
-import Cadastro from './Cadastro'
 
-const Login = ( { handleLogin, onClose, openCadastroModal } ) => {
+const Login = ( { handleLogin, openCadastroModal } ) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [showCadastroModal, setShowCadastroModal] = useState(false)
 
     // Função para lidar com a submissão do formulário
     const handleSubmit = (event) => {
@@ -24,7 +20,7 @@ const Login = ( { handleLogin, onClose, openCadastroModal } ) => {
                 if (!response.ok) {
                     throw new Error('Falha ao efetuar login');
                 }
-                handleLogin();
+                handleLogin(username);
             })
             .catch(error => {
                 console.error('Erro ao efetuar login:', error);
@@ -66,9 +62,6 @@ const Login = ( { handleLogin, onClose, openCadastroModal } ) => {
                 <button className={styles.botao} type="submit">Entrar</button>
                 <button className={styles.link} onClick={handleOpenCadastro}>Cadastre-se</button>
             </form>
-            <Modal isOpen={showCadastroModal} onClose={onClose}>
-                <Cadastro onClose={onClose} />
-            </Modal>
         </div>
     );
 };

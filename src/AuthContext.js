@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
 
     const handleLogin = (username) => {
         setUsername(username)
+        console.log(username)
         setIsLoggedIn(true);
         closeModal();
     };

@@ -1,0 +1,21 @@
+.botaoFavoritar {
+    display: inline-block;
+  }
+  
+  .botao {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .botao:hover {
+    color: #f00; /* Vermelho quando hover */
+  }
+  
+  .favoritado {
+    color: #f00; /* Vermelho quando favoritado */
+  }
+  
