@@ -16,7 +16,7 @@ const Header = () => {
             case 'login':
                 return <Login handleLogin={handleLogin} onClose={closeModal} openCadastroModal={openCadastroModal} />;
             case 'logout':
-                return <Logout handleLogout={handleLogout} />;
+                return <Logout username={username} handleLogout={handleLogout} />;
             case 'favoritos':
                 return <Favoritos username={username} />;
             default:

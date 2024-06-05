@@ -1,11 +1,11 @@
 import React  from "react";
 import styles from './Logout.module.css'
 
-const Logout = (props) => {
+const Logout = ( { username, handleLogout } ) => {
     return (
         <div>
-            <p className={styles.title}>Você deseja mesmo sair?</p>
-            <button className={styles.botao} onClick={props.handleLogout}>Logout</button>
+            <p className={styles.title}>Você deseja mesmo sair, {username}?</p>
+            <button className={styles.botao} onClick={handleLogout}>Logout</button>
         </div>
     )
 }
