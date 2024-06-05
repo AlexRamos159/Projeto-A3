@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './Favoritos.module.css';
+import styles from './styles/Favoritos.module.css';
 import Modal from './Modal';
 
 const Favoritos = ({ username }) => {

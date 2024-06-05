@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './assets/Logo-ChefIA.ico'
-import styles from './Header.module.css'
+import styles from './styles/Header.module.css'
 import { useAuth } from '../AuthContext';
 import Modal from './Modal'
 import Favoritos from './Favoritos'

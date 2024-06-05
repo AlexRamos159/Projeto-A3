@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Botao.module.css'
+import styles from './styles/Botao.module.css'
 
 const Botao = ({ onClick, setResposta, texto }) => {
     const handleClick = () => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './BotaoFavoritar.module.css';
+import styles from './styles/BotaoFavoritar.module.css';
 import { useAuth } from '../AuthContext';
 
 const BotaoFavoritar = ({ titulo, ingredientes, modoPreparo }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Resposta.module.css'
+import styles from './styles/Resposta.module.css'
 import BotaoFavoritar from './BotaoFavoritar';
 
 const Resposta = ({ resposta }) => {

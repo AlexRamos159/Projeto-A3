@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './Login.module.css';
+import styles from './styles/Login.module.css';
 
 const Login = ( { handleLogin, openCadastroModal } ) => {
     const [username, setUsername] = useState('');

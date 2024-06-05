@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styles from './Cadastro.module.css'
+import styles from './styles/Cadastro.module.css'
 
 const Cadastro = ({ onClose }) => {
     const [username, setUsername] = useState('')

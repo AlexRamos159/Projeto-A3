@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './InputReceita.module.css'
+import styles from './styles/InputReceita.module.css'
 
 const InputReceita = (props) => {
     return (
