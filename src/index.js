@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import Header from './components/Header'
-import Resposta from './components/Resposta';
-import InputReceita from './components/InputReceita';
-import Botao from './components/Botao';
-import { AuthProvider } from './AuthContext';
+import Header from './frontend/components/Header'
+import Resposta from './frontend/components/Resposta';
+import InputReceita from './frontend/components/InputReceita';
+import Botao from './frontend/components/Botao';
+import { AuthProvider } from './frontend/AuthContext';
 
 const App = () => {
     const [texto, setTexto] = useState('');

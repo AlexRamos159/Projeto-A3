@@ -1,0 +1,55 @@
+.favoritosModal {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.favoritesGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.favoriteItem {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    flex: 1 0 21%;
+    text-align: center;
+}
+
+.favoriteItem h3 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.recipeModalContent {
+    padding: 20px;
+}
+
+.recipeModalContent h2 {
+    margin-top: 0;
+}
+
+.recipeModalContent ul, .recipeModalContent ol {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.deleteButton {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.deleteButton:hover {
+    background-color: #ff1a1a;
+}

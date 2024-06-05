@@ -12,9 +12,9 @@ import (
 
 // Definição da estrutura de dados para um usuário
 type User struct {
-	Username  string   `json:"username"` // Campo para o nome de usuário
-	Password  string   `json:"password"` // Campo para a senha do usuário
-	Favorites []Recipe `json:"favorites,omitempty"`
+	Username  string   `json:"username"`
+	Password  string   `json:"password"`
+	Favorites []Recipe `json:"favorites"`
 }
 
 // Definição da estrutura de dados para uma receita
@@ -26,18 +26,17 @@ type Recipe struct {
 
 func main() {
 	// Carrega os usuários do arquivo
-	users, err := loadUsers()
-	// Log para exibir os usuários carregados
-	fmt.Println("Usuários carregados:", users)
+	users, err := loadUsers("./src/backend/users.json")
 	if err != nil {
 		fmt.Println("Erro ao carregar usuários:", err)
 		return
 	}
+	fmt.Println("Usuários carregados:", users)
+
 	r := mux.NewRouter()
 
-	// Manipulador para a rota de register
+	// Manipulador para a rota de registro
 	r.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
-		// Verifica se o método da requisição é POST
 		if r.Method != http.MethodPost {
 			w.WriteHeader(http.StatusMethodNotAllowed)
 			fmt.Fprintf(w, "Método não permitido.")
@@ -48,21 +47,18 @@ func main() {
 		username := r.FormValue("username")
 		password := r.FormValue("password")
 
-		// Cria um novo usuário com os dados recebidos
-		newUser := User{Username: username, Password: password, Favorites: []Recipe{}}
-
-		// Verifica se o usuário e a senha fornecidos são válidos
-		if !isValidUsername(users, newUser.Username) {
-			// Retorna status de não autorizado se não forem válidos
+		if !isValidUsername(users, username) {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "Username já em uso.")
-			//Log de usuário recebido em uso
-			fmt.Println("Username in use: ", newUser.Username)
+			fmt.Println("Username em uso: ", username)
 			return
 		}
 
+		// Cria um novo usuário com os dados recebidos
+		newUser := User{Username: username, Password: password, Favorites: []Recipe{}}
 		users = append(users, newUser)
-		err := saveUsers(users)
+
+		err := saveUsers("./src/backend/users.json", users)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Fprintf(w, "Erro ao salvar o usuário.")
@@ -70,9 +66,7 @@ func main() {
 			return
 		}
 
-		// Se o username for válido, inserir
 		fmt.Fprintf(w, "Cadastrado com sucesso!")
-		// Log de usuário salvo
 		fmt.Println("Usuário salvo: ", newUser)
 	}).Methods("POST")
 
@@ -91,18 +85,24 @@ func main() {
 }
 
 // Função para carregar os usuários do arquivo JSON
-func loadUsers() ([]User, error) {
-	// Lê os dados do arquivo de usuários
-	data, err := os.ReadFile("../users.json")
+func loadUsers(filename string) ([]User, error) {
+
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
 
-	// Decodifica os dados JSON em uma lista de usuários
 	var users []User
 	err = json.Unmarshal(data, &users)
 	if err != nil {
 		return nil, err
+	}
+
+	// Inicializa o campo Favorites se estiver ausente
+	for i := range users {
+		if users[i].Favorites == nil {
+			users[i].Favorites = []Recipe{}
+		}
 	}
 
 	return users, nil
@@ -110,23 +110,21 @@ func loadUsers() ([]User, error) {
 
 // Função para verificar se um usuário é válido
 func isValidUsername(users []User, username string) bool {
-	// Verifica se existe um usuário com o nome de usuário inserido
 	for _, user := range users {
 		if user.Username == username {
 			return false
 		}
 	}
-
 	return true
 }
 
-func saveUsers(users []User) error {
-	// Cria um arquivo JSON com os dados dos usuários
-	data, err := json.Marshal(users)
+func saveUsers(filename string, users []User) error {
+
+	data, err := json.MarshalIndent(users, "", "  ")
 	if err != nil {
 		return err
 	}
-	err = os.WriteFile("../users.json", data, 0644)
+	err = os.WriteFile(filename, data, 0644)
 	if err != nil {
 		return err
 	}

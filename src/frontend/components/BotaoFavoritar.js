@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './BotaoFavoritar.module.css';
 import { useAuth } from '../AuthContext';
 
 const BotaoFavoritar = ({ titulo, ingredientes, modoPreparo }) => {
     const [favoritado, setFavoritado] = useState(false);
     const { isLoggedIn, username, openModal } = useAuth();
+
+    // useEffect para resetar o estado favoritado quando a receita mudar
+    useEffect(() => {
+        setFavoritado(false);
+    }, [titulo, ingredientes, modoPreparo]);
 
     const handleFavoritar = () => {
         if (!isLoggedIn) {
@@ -21,14 +26,12 @@ const BotaoFavoritar = ({ titulo, ingredientes, modoPreparo }) => {
             }
         };
     
-        console.log("Dados enviados para o backend:", data);
-    
         fetch('http://localhost:4003/add-favorite', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json', // Especifica que o corpo é JSON
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data) // Converte os dados para JSON
+            body: JSON.stringify(data)
         })
         .then(response => {
             if (!response.ok) {
@@ -43,8 +46,6 @@ const BotaoFavoritar = ({ titulo, ingredientes, modoPreparo }) => {
         });
     };
     
-    
-
     return (
         <div className={styles.botaoFavoritar}>
             {!favoritado ? (

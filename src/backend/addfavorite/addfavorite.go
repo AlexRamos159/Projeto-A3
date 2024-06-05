@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"sync"
 
 	"github.com/gorilla/mux"
@@ -32,25 +33,24 @@ type RecipeRequest struct {
 	Recipe   Recipe `json:"recipe"`
 }
 
-var userStore UserStore
-
 // UserStore mantém uma lista de usuários
 type UserStore struct {
 	sync.Mutex
 	Users []User
 }
 
+var userStore UserStore
+
 func main() {
 	fmt.Println("Servidor iniciado na porta 4003")
 	// Carregar os usuários do arquivo JSON
-	if err := userStore.LoadUsers("../users.json"); err != nil {
+	if err := userStore.LoadUsers("./src/backend/users.json"); err != nil {
 		log.Fatalf("Erro ao carregar usuários: %v", err)
 	}
 
 	r := mux.NewRouter()
-	store := &UserStore{}
 
-	r.HandleFunc("/add-favorite", store.handleFavoritar).Methods("POST")
+	r.HandleFunc("/add-favorite", handleFavoritar).Methods("POST")
 
 	// Configuração CORS
 	corsOptions := cors.New(cors.Options{
@@ -64,11 +64,11 @@ func main() {
 	http.ListenAndServe(":4003", handler)
 }
 
-func (store *UserStore) handleFavoritar(w http.ResponseWriter, r *http.Request) {
+func handleFavoritar(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint /add-favorite acessado")
 
 	// Carrega os dados do JSON usando a func LoadUsers
-	err := store.LoadUsers("../users.json")
+	err := userStore.LoadUsers("./src/backend/users.json")
 	// Tratativa de erro
 	if err != nil {
 		log.Printf("Erro ao carregar usuários: %v", err)
@@ -129,7 +129,7 @@ func (store *UserStore) handleFavoritar(w http.ResponseWriter, r *http.Request) 
 	log.Println("Favoritos do usuário após a adição:", foundUser.Favorites)
 
 	// Salva os usuários atualizados no arquivo JSON
-	if err := userStore.SaveUsers("../users.json"); err != nil {
+	if err := userStore.SaveUsers("./users.json"); err != nil {
 		http.Error(w, "Erro ao salvar usuários", http.StatusInternalServerError)
 		return
 	}
@@ -138,7 +138,6 @@ func (store *UserStore) handleFavoritar(w http.ResponseWriter, r *http.Request) 
 	log.Printf("Usuário atualizado: %v", foundUser)
 
 	w.WriteHeader(http.StatusOK)
-
 }
 
 // LoadUsers carrega os usuários do arquivo JSON
@@ -146,11 +145,13 @@ func (store *UserStore) LoadUsers(filename string) error {
 	store.Lock()
 	defer store.Unlock()
 
-	data, err := ioutil.ReadFile(filename)
+	// Lê os dados do arquivo de usuários
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
 
+	// Decodifica os dados JSON em uma lista de usuários
 	err = json.Unmarshal(data, &store.Users)
 	if err != nil {
 		return err

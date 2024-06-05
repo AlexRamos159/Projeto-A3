@@ -18,15 +18,15 @@
   
   .ingredientes li {
     margin-bottom: 10px; /* Adiciona margem inferior aos itens da lista */
-    list-style-type: none !important; /* Remove os marcadores de lista */
+    list-style-type: none /* Remove os marcadores de lista */
   }
-  
-  .modoPreparo ol {
-    list-style-type: decimal; /* Define os marcadores de lista como numéricos */
+
+  .modoPreparo {
+    list-style-type: none; /* Remove os marcadores de lista */
     padding: 0 0 0 20px; /* Adiciona preenchimento à esquerda para a lista numerada */
   }
   
-  .modoPreparo ol li {
+  .modoPreparo li {
     margin-bottom: 10px; /* Adiciona margem inferior aos itens da lista */
   }
   

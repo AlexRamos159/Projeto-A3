@@ -80,7 +80,7 @@ func (store *UserStore) IsValidUser(username, password string) bool {
 
 func (store *UserStore) handleLogin(w http.ResponseWriter, r *http.Request) {
 	// Recarrega os usuários do arquivo JSON a cada requisição
-	err := store.LoadUsers("../users.json")
+	err := store.LoadUsers("./src/backend/users.json")
 	if err != nil {
 		log.Printf("Erro ao carregar usuários: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
