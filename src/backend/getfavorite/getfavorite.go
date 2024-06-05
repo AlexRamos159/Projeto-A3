@@ -33,11 +33,12 @@ type UserStore struct {
 }
 
 var userStore UserStore
+var usersFilePath = "./src/backend/users.json"
 
 func main() {
-	fmt.Println("Servidor de obtenção de favoritos iniciado na porta 4004")
+	fmt.Println("Servidor iniciado na porta 4004")
 	// Carregar os usuários do arquivo JSON
-	if err := userStore.LoadUsers("./src/backend/users.json"); err != nil {
+	if err := userStore.LoadUsers(usersFilePath); err != nil {
 		log.Fatalf("Erro ao carregar usuários: %v", err)
 	}
 
@@ -68,7 +69,7 @@ func handleGetFavorites(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Carrega os dados do JSON usando a func LoadUsers
-	err := userStore.LoadUsers("./src/backend/users.json")
+	err := userStore.LoadUsers(usersFilePath)
 	// Tratativa de erro
 	if err != nil {
 		log.Printf("Erro ao carregar usuários: %v", err)

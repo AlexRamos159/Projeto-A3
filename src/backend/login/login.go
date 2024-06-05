@@ -24,6 +24,8 @@ type UserStore struct {
 	Users []User
 }
 
+var usersFilePath = "./src/backend/users.json"
+
 func main() {
 	// Inicia o servidor HTTP na porta 4001
 	fmt.Println("Servidor iniciado na porta 4001")
@@ -80,7 +82,7 @@ func (store *UserStore) IsValidUser(username, password string) bool {
 
 func (store *UserStore) handleLogin(w http.ResponseWriter, r *http.Request) {
 	// Recarrega os usuários do arquivo JSON a cada requisição
-	err := store.LoadUsers("./src/backend/users.json")
+	err := store.LoadUsers(usersFilePath)
 	if err != nil {
 		log.Printf("Erro ao carregar usuários: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)

@@ -40,11 +40,12 @@ type UserStore struct {
 }
 
 var userStore UserStore
+var usersFilePath = "./src/backend/users.json"
 
 func main() {
 	fmt.Println("Servidor iniciado na porta 4003")
 	// Carregar os usuários do arquivo JSON
-	if err := userStore.LoadUsers("./src/backend/users.json"); err != nil {
+	if err := userStore.LoadUsers(usersFilePath); err != nil {
 		log.Fatalf("Erro ao carregar usuários: %v", err)
 	}
 
@@ -68,7 +69,7 @@ func handleFavoritar(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint /add-favorite acessado")
 
 	// Carrega os dados do JSON usando a func LoadUsers
-	err := userStore.LoadUsers("./src/backend/users.json")
+	err := userStore.LoadUsers(usersFilePath)
 	// Tratativa de erro
 	if err != nil {
 		log.Printf("Erro ao carregar usuários: %v", err)
@@ -129,7 +130,7 @@ func handleFavoritar(w http.ResponseWriter, r *http.Request) {
 	log.Println("Favoritos do usuário após a adição:", foundUser.Favorites)
 
 	// Salva os usuários atualizados no arquivo JSON
-	if err := userStore.SaveUsers("./users.json"); err != nil {
+	if err := userStore.SaveUsers(usersFilePath); err != nil {
 		http.Error(w, "Erro ao salvar usuários", http.StatusInternalServerError)
 		return
 	}

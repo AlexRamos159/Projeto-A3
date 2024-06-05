@@ -8,5 +8,10 @@
     "username": "admin2",
     "password": "admin",
     "favorites": []
+  },
+  {
+    "username": "admin3",
+    "password": "admin",
+    "favorites": []
   }
 ]

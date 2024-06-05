@@ -24,14 +24,15 @@ type Recipe struct {
 	ModoPreparo  []string `json:"modoPreparo"`
 }
 
+var usersFilePath = "./src/backend/users.json"
+
 func main() {
 	// Carrega os usuários do arquivo
-	users, err := loadUsers("./src/backend/users.json")
+	users, err := loadUsers(usersFilePath)
 	if err != nil {
 		fmt.Println("Erro ao carregar usuários:", err)
 		return
 	}
-	fmt.Println("Usuários carregados:", users)
 
 	r := mux.NewRouter()
 
@@ -58,7 +59,7 @@ func main() {
 		newUser := User{Username: username, Password: password, Favorites: []Recipe{}}
 		users = append(users, newUser)
 
-		err := saveUsers("./src/backend/users.json", users)
+		err := saveUsers(usersFilePath, users)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Fprintf(w, "Erro ao salvar o usuário.")

@@ -34,6 +34,7 @@ type DeleteRecipeRequest struct {
 }
 
 var userStore UserStore
+var usersFilePath = "./src/backend/users.json"
 
 // UserStore mantém uma lista de usuários
 type UserStore struct {
@@ -43,7 +44,7 @@ type UserStore struct {
 
 func main() {
 	fmt.Println("Servidor iniciado na porta 4005")
-	if err := userStore.LoadUsers("./src/backend/users.json"); err != nil {
+	if err := userStore.LoadUsers(usersFilePath); err != nil {
 		log.Fatalf("Erro ao carregar usuários: %v", err)
 	}
 
@@ -66,7 +67,7 @@ func (store *UserStore) handleDeleteFavorite(w http.ResponseWriter, r *http.Requ
 	fmt.Println("Endpoint /del-favorite acessado")
 
 	// Carrega os usuários do arquivo JSON
-	if err := store.LoadUsers("./src/backend/users.json"); err != nil {
+	if err := store.LoadUsers(usersFilePath); err != nil {
 		log.Printf("Erro ao carregar usuários: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -122,7 +123,7 @@ func (store *UserStore) handleDeleteFavorite(w http.ResponseWriter, r *http.Requ
 	foundUser.Favorites = append(foundUser.Favorites[:index], foundUser.Favorites[index+1:]...)
 
 	// Salva os usuários atualizados no arquivo JSON
-	if err := store.SaveUsers("./src/backend/users.json"); err != nil {
+	if err := store.SaveUsers(usersFilePath); err != nil {
 		http.Error(w, "Erro ao salvar usuários", http.StatusInternalServerError)
 		return
 	}
