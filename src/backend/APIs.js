@@ -3,7 +3,6 @@ const path = require('path-browserify');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 const apiKey = process.env.OPENAI_API_KEY;
-console.log(apiKey)
 const openai = new OpenAI(apiKey);
 
 const chamarAPI = async (prompt) => {
